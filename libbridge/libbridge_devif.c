@@ -288,12 +288,16 @@ static int br_set(const char *bridge, const char *name,
 	char path[SYSFS_PATH_MAX];
 	FILE *f;
 
-	snprintf(path, SYSFS_PATH_MAX, SYSFS_CLASS_NET "%s/%s", bridge, name);
+/* Debian bug #496491 */
+	snprintf(path, SYSFS_PATH_MAX, SYSFS_CLASS_NET "%s/bridge/%s", bridge, name);
 
 	f = fopen(path, "w");
 	if (f) {
 		ret = fprintf(f, "%ld\n", value);
 		fclose(f);
+/* Debian bug #574363 */
+		if (errno)
+			ret=-1;
 	} else {
 		/* fallback to old ioctl */
 		struct ifreq ifr;
@@ -355,6 +359,9 @@ static int port_set(const char *bridge, const char *ifname,
 	if (f) {
 		ret = fprintf(f, "%ld\n", value);
 		fclose(f);
+/* Debian bug #574363 */
+		if (errno)
+			ret=-1;
 	} else {
 		int index = get_portno(bridge, ifname);
 

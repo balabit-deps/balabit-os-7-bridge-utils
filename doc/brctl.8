@@ -89,7 +89,7 @@ data. Machines can move to other ports, network cards can be replaced
 .B brctl showmacs <brname>
 shows a list of learned MAC addresses for this bridge.
 
-.B brctl setageingtime <brname> <time>
+.B brctl setageing <brname> <time>
 sets the ethernet (MAC) address ageing time, in seconds. After <time>
 seconds of not having seen a frame coming from a certain address, the
 bridge will time out (delete) that address from the Forwarding
@@ -107,7 +107,7 @@ networks of ethernets using the IEEE 802.1d spanning tree
 protocol. This protocol is used for finding the shortest path between
 two ethernets, and for eliminating loops from the topology. As this
 protocol is a standard, linux bridges will interwork properly with
-other third party bridge products. Bridges communicate with eachother
+other third party bridge products. Bridges communicate with each other
 by sending and receiving BPDUs (Bridge Protocol Data Units). These
 BPDUs can be recognised by an ethernet destination address of
 01:80:c2:00:00:00.

@@ -5,8 +5,7 @@ AR=ar
 RANLIB=@RANLIB@
 
 CC=@CC@
-CFLAGS = -Wall -g $(KERNEL_HEADERS)
-
+CFLAGS = -Wall -g $(KERNEL_HEADERS) @CFLAGS@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 includedir=@includedir@
@@ -34,8 +33,8 @@ libbridge.a:	$(libbridge_OBJECTS)
 	$(RANLIB) $@
 
 %.o: %.c libbridge.h libbridge_private.h
-	$(CC) $(CFLAGS) $(INCLUDE) -c $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE) -c $<
 
 libbridge_compat.o:	libbridge_compat.c if_index.c
-	$(CC) $(CFLAGS) -c libbridge_compat.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c libbridge_compat.c
 
